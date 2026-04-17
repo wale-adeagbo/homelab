@@ -1,5 +1,5 @@
 # Windows Monitoring Homelab
-A production-style monitoring and observability lab built on a Windows 11 mini PC using Docker, Prometheus, Grafana, Alertmanager, and `windows_exporter`.
+A production-style monitoring and observability lab built on a Windows 11 mini PC using Docker, Prometheus, Grafana, Alertmanager, and Windows Exporter.
 
 ## Overview
 This project was built as part of my homelab to demonstrate practical infrastructure monitoring, alerting, and operational visibility in a small but realistic environment.
@@ -28,7 +28,7 @@ The stack collects host-level metrics from a Windows 11 mini PC, visualizes them
 - Prometheus
 - Grafana
 - Alertmanager
-- `windows_exporter`
+- Windows Exporter
 
 ## Architecture
 ```text
