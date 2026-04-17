@@ -1,0 +1,38 @@
+groups:
+  - name: windows-host-alerts
+    rules:
+      - alert: WindowsHostDown
+        expr: up{job="windows-host"} == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: Windows host is down
+          description: Prometheus cannot scrape the Windows host for more than 1 minute.
+
+      - alert: HighCPUUsage
+        expr: 100 - (avg by(instance) (rate(windows_cpu_time_total{mode="idle"}[5m])) * 100) > 85
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: High CPU usage
+          description: CPU usage has been above 85 percent for 5 minutes.
+
+      - alert: LowDiskFreeSpace
+        expr: (windows_logical_disk_free_bytes{volume!=""} / windows_logical_disk_size_bytes{volume!=""}) * 100 < 15
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          summary: Low disk space
+          description: Disk free space is below 15 percent for 10 minutes.
+
+      - alert: HighMemoryUsage
+        expr: ((windows_os_physical_memory_free_bytes / windows_cs_physical_memory_bytes) * 100) < 15
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: High memory usage
+          description: Available memory is below 15 percent for 5 minutes.
