@@ -1,0 +1,26 @@
+---
+- name: Basic Server Setup
+  hosts: managed_nodes
+  become: true
+
+  tasks:
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+        cache_valid_time: 3600
+
+    - name: Install essential packages
+      apt:
+        name:
+          - curl
+          - wget
+          - git
+          - htop
+          - net-tools
+          - ufw
+        state: present
+
+    - name: Enable UFW firewall
+      ufw:
+        state: enabled
+        policy: allow
