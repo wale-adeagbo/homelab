@@ -56,6 +56,19 @@ What was built:
 
 Key skills: Active Directory · Windows Server · GPO · IAM · DNS.
 
+### 4. Security Monitoring — Wazuh SIEM
+
+Deployed Wazuh 4.9.2 as a containerised SIEM solution for 
+real-time security monitoring, threat detection, and compliance.
+
+**What was built:**
+- Wazuh single-node deployment via Docker Compose
+- SSL certificates generated for secure communication
+- ansible-node-01 enrolled as active monitored endpoint
+- Real-time security alerts and event monitoring active
+
+**Key skills:** Wazuh · SIEM · Docker · Security Monitoring · 
+Threat Detection · Compliance
 
 ## Repository Structure.
 ```
@@ -74,6 +87,8 @@ Homelab/
 ├── alertmanager.yml             # Alertmanager routing configuration.
 ├── docker-compose.yml           # Monitoring stack composition.
 └── .gitignore                   # Excludes secrets, state files, keys.
+├── wazuh/
+│   └── docker-compose.yml       # Wazuh SIEM deployment
 ```
 ---
 ## Skills Demonstrated -
@@ -104,7 +119,7 @@ Every project in this homelab is built around three core operational principles:
 ## Roadmap
 
 - Integrate Ansible with Active Directory environment.
-- Add security monitoring with Wazuh (SIEM).
+- Add security monitoring with Wazuh (SIEM). -- Done!
 - Expand monitoring to cover VM nodes provisioned by Terraform.
 - Implement SSH hardening playbook (fail2ban, root login disabled).
 - Explore Azure AD / Entra ID integration for hybrid identity.
