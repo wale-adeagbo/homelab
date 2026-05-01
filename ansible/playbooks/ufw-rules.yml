@@ -1,0 +1,52 @@
+---
+- name: UFW Firewall Configuration
+  hosts: managed_nodes
+  become: true
+
+  vars:
+    allowed_ports:
+      - { port: 22, proto: tcp, comment: "SSH" }
+      - { port: 80, proto: tcp, comment: "HTTP" }
+      - { port: 443, proto: tcp, comment: "HTTPS" }
+      - { port: 9100, proto: tcp, comment: "Prometheus Node Exporter" }
+
+  tasks:
+    - name: Install UFW
+      apt:
+        name: ufw
+        state: present
+
+    - name: Reset UFW to defaults
+      ufw:
+        state: reset
+
+    - name: Set default incoming policy to deny
+      ufw:
+        default: deny
+        direction: incoming
+
+    - name: Set default outgoing policy to allow
+      ufw:
+        default: allow
+        direction: outgoing
+
+    - name: Allow specific ports
+      ufw:
+        rule: allow
+        port: "{{ item.port }}"
+        proto: "{{ item.proto }}"
+        comment: "{{ item.comment }}"
+      loop: "{{ allowed_ports }}"
+
+    - name: Enable UFW
+      ufw:
+        state: enabled
+
+    - name: Check UFW status
+      command: ufw status verbose
+      register: ufw_status
+      changed_when: false
+
+    - name: Display UFW status
+      debug:
+        msg: "{{ ufw_status.stdout_lines }}"
