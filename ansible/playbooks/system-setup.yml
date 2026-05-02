@@ -1,6 +1,6 @@
 ---
 - name: Basic Server Setup
-  hosts: managed_nodes
+  hosts: all
   become: true
 
   tasks:

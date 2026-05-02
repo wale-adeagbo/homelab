@@ -1,0 +1,41 @@
+---
+- name: Basic Server Setup (Amazon Linux)
+  hosts: all
+  become: true
+
+  tasks:
+    - name: Update all packages
+      dnf:
+        name: "*"
+        state: latest
+        update_cache: yes
+
+    - name: Install essential packages
+      dnf:
+        name:
+          - wget
+          - git
+          - htop
+          - net-tools
+          - firewalld
+        state: present
+
+    - name: Enable and start firewalld
+      systemd:
+        name: firewalld
+        enabled: yes
+        state: started
+
+    - name: Allow SSH through firewall
+      firewalld:
+        service: ssh
+        permanent: yes
+        state: enabled
+        immediate: yes
+
+    - name: Allow HTTP through firewall
+      firewalld:
+        service: http
+        permanent: yes
+        state: enabled
+        immediate: yes
